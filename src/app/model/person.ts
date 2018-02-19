@@ -1,11 +1,8 @@
-export class Person {
-		id: String;
-		surname: String;
-		firstname: String;
-		gender: Gender;
-}
+import { Gender } from "./gender";
 
-export enum Gender{
-		M = "Male",
-		F = "Female"
+export class Person {
+	id: String;
+
+	constructor(public surname: String, public firstname: String, public gender: Gender, public email?: String) {
+	}
 }
