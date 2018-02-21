@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from '@angular/core';
 
 // Components
@@ -25,6 +26,7 @@ import { LoginService } from "./service/login.service";
   imports: [
 		BrowserModule,
 		FormsModule,
+		ReactiveFormsModule,
 		AppRoutingModule
   ],
   providers: [LoginService],
