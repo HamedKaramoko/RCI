@@ -1,8 +1,10 @@
 import { Gender } from "./gender";
 
 export class Person {
-	id: String;
+	id: string;
+	login: string;
+	password: string;
 
-	constructor(public surname: String, public firstname: String, public gender: Gender, public email?: String) {
+	constructor(public surname: string, public firstname: string, public gender: Gender, public email?: string) {
 	}
 }

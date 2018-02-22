@@ -9,47 +9,39 @@ export class LoginService {
 
 	constructor() { }
 
-	connected: LoginParameter = null;
-
-	private findLogin(givenLogin: string): LoginParameter {
-		return logins.find((element) => {
+	private findPersonByLogin(givenLogin: string): Person {
+		return persons.find((element) => {
 			return element.login === givenLogin;
 		});
 	}
 
-	private findPersonById(givenId: string): Person {
-		return persons.find((element) => {
-			return element.id === givenId;
-		});
-	}
-
 	login(givenLoginInfo: LoginParameter): Person{
-		let loginInfo = this.findLogin(givenLoginInfo.login);
+		let foundPerson = this.findPersonByLogin(givenLoginInfo.login);
 
-		if(loginInfo === undefined){
-			console.log("Cet utilisateur n'est pas connu");
+		if(foundPerson === undefined){
+			console.log("Unknown user!!!");
 			return null;
 		} else {
-			if(loginInfo.password !== givenLoginInfo.password)
+			if(foundPerson.password !== givenLoginInfo.password){
+				console.log("Incorrect password!!!");
 				return null;
-
-			let person = this.findPersonById(loginInfo.idPerson);
-			this.connected = loginInfo;
-			console.log("Connected : ", person);
-			return person;
+			}
+			console.log("Connected : ", foundPerson);
+			return foundPerson;
 		}
 
 	}
 
 	logout(login: string){
-		console.log("Disconnected : ", this.connected);
-		this.connected = null;
+		console.log("User {} Disconnected!!!", login);
 	}
 }
 
 const persons: Person[] = [
 	{
 		id: '1',
+		login: 'hamedkaramoko',
+		password: 'hamed',
 		surname: 'KARAMOKO',
 		firstname: 'Hamed',
 		gender: Gender.M,
@@ -57,24 +49,11 @@ const persons: Person[] = [
 	},
 	{
 		id: '2',
+		login: 'yuyu',
+		password: 'yuyu',
 		surname: 'OUATTARA',
 		firstname: 'MAriama Yusuf',
 		gender: Gender.F,
 		email: 'omariamayusuf@gmail.com'
-	}
-];
-
-const logins: LoginParameter[] = [
-	{
-		idPerson: '1',
-		login: 'HamedKaramoko',
-		password: 'hamed',
-		stayConnected: true
-	},
-	{
-		idPerson: '2',
-		login: 'MariamaOuattara',
-		password: 'mariama',
-		stayConnected: false
 	}
 ];

@@ -1,5 +1,5 @@
+// To keep login parameters when user attempt to connect
 export class LoginParameter {
-	idPerson?: string;
 	login: string;
 	password: string;
 	stayConnected: boolean;
