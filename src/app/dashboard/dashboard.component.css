@@ -1,0 +1,10 @@
+.board-container{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border: 1px blue dashed;
+}
+.board{
+	border: 1px inset black;
+	border-radius: 20px;
+	height: 250px;
+}
