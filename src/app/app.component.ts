@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from './service/login.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'RCI public service';
+  title = 'RCI P.C.';
+
+  constructor(private loginService: LoginService){}
+
+  logout(){
+	  this.loginService.logout();
+  }
 }

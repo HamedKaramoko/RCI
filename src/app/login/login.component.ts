@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators , FormGroup, FormControl } from "@angular/forms";
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { LoginService } from "../service/login.service";
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
 
 	loginParameters: LoginParameter;
 
-	constructor(private location: Location, private fb: FormBuilder, private loginService: LoginService) {
+	constructor(private location: Location, private router: Router, private fb: FormBuilder, private loginService: LoginService) {
 		console.log("constructor");
 		this.createForm();
 	}
@@ -51,6 +52,9 @@ export class LoginComponent implements OnInit{
 			stayConnected: formModel.stayConnected
 		}
 		console.log(this.loginParameters);
-		this.loginService.login(this.loginParameters);
+		if(this.loginService.login(this.loginParameters)){
+			console.log("je pars.");
+			this.router.navigate(['/home']);
+		}
 	}
 }

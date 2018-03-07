@@ -9,6 +9,16 @@ export class LoginService {
 
 	constructor() { }
 
+	private connectedUser: Person;
+
+	get getConnectedUser(){
+		return this.connectedUser;
+	}
+
+	set setConnectedUser(newConnectedUser: Person){
+		this.connectedUser = newConnectedUser;
+	}
+
 	private findPersonByLogin(givenLogin: string): Person {
 		return persons.find((element) => {
 			return element.login === givenLogin;
@@ -27,13 +37,15 @@ export class LoginService {
 				return null;
 			}
 			console.log("Connected : ", foundPerson);
+			this.connectedUser = foundPerson;
 			return foundPerson;
 		}
 
 	}
 
-	logout(login: string){
-		console.log("User {} Disconnected!!!", login);
+	logout(){
+		console.log("User {} Disconnected!!!", this.connectedUser.login);
+		this.connectedUser = null;
 	}
 }
 
