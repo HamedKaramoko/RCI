@@ -8,7 +8,7 @@ import { ServiceDetailComponent } from './service-detail/service-detail.componen
 import { ExtendedServiceListComponent } from './extended-service-list/extended-service-list.component';
 
 const serviceRoutes: Routes = [
-	{ path: 'service', component: ServiceListComponent },
+	{ path: 'services', component: ServiceListComponent },
 	{ path: 'service/:id', component: ServiceDetailComponent },
 	{ path: 'extendedService', component: ExtendedServiceListComponent}
 ];

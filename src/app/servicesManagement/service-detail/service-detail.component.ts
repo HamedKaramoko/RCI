@@ -18,7 +18,8 @@ import { Service } from '../../model/service';
 })
 export class ServiceDetailComponent implements OnInit {
 
-	service: Observable<Service>;
+	service$: Observable<Service>;
+	service: Service;
 	serviceForm: FormGroup;
 
 	constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private serviceService: ServiceService) {
@@ -26,8 +27,8 @@ export class ServiceDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.route.paramMap.switchMap((params: ParamMap) =>
-			this.service = this.serviceService.getService(params.get('id'))
+		this.service$ = this.route.paramMap.switchMap((params: ParamMap) =>
+			this.serviceService.getService(params.get('id'))
 		);
 	}
 
@@ -37,6 +38,11 @@ export class ServiceDetailComponent implements OnInit {
 			description: ['', Validators.required],
 			cost: ['', Validators.required]
 		});
+	}
+
+	gotToServices(service: Service){
+		let serviceId = service ? service.id : null;
+		this.router.navigate(['/services', { id: serviceId}]);
 	}
 
 }

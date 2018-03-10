@@ -1,4 +1,4 @@
-<!--<div class="container">
+<div class="container" *ngIf="service$ | async as service">
 	<div class="row">
 		<form class="col-md-6 col-md-offset-3 well" [formGroup]="serviceForm" (ngSubmit)="onSubmit()" novalidate>
 			<div class="row">
@@ -12,6 +12,7 @@
 						<input class="form-control" type="text" id="label" placeholder="Label" formControlName="label">
 					</div>
 					<div class="form-group">
+						<!--textarea [(ngModel)]="message" rows="10" cols="35" [disabled]="sending"></textarea-->
 						<label for="description" ><span class="required-field">*</span> Description : </label>
 						<input class="form-control" type="text" id="description" placeholder="Description" formControlName="description">
 					</div>
@@ -21,7 +22,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-2 col-md-offset-8">
-							<button type="button" class="btn btn-default" (click)="goBack()">Back</button>
+							<button type="button" class="btn btn-default" (click)="gotToServices(service)">Back</button>
 						</div>
 						<div class="col-md-2">
 							<button type="submit" class="btn btn-success" [disabled]="serviceForm.invalid">Save</button>
@@ -31,5 +32,4 @@
 			</div>
 		</form>
 	</div>
-</div>-->
-<p>Je suis là</p>
+</div>

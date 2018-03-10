@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service.service';
 import { Service } from '../../model/service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-service-list',
@@ -10,15 +12,17 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ServiceListComponent implements OnInit {
 
-	services$ : Observable<Service[]>;
+	services$: Observable<Service[]>;
+	selectedServiceId: string;
 
-	constructor(private serviceService: ServiceService) { }
+	constructor(private route: ActivatedRoute,
+		private serviceService: ServiceService) { }
 
 	ngOnInit() {
+		this.services$ = this.route.paramMap.switchMap((params: ParamMap) => {
+			this.selectedServiceId = params.get('id');
+			console.log("The id is : ", this.selectedServiceId);
+			return this.serviceService.getServices();
+		});
 	}
-
-	getServiceList(){
-		this.services$ = this.serviceService.getServices();
-	}
-
 }
