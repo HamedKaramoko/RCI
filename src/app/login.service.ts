@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { LoginParameter } from '../model/login-parameter';
-import { Person } from '../model/person';
-import { Gender } from '../model/gender';
+import { LoginParameter } from './model/login-parameter';
+import { Person } from './model/person';
+import { Gender } from './model/gender';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
 
 @Injectable()
 export class LoginService {
@@ -10,6 +14,8 @@ export class LoginService {
 	constructor() { }
 
 	private connectedUser: Person;
+	// store the URL so we can redirect after logging in
+	redirectUrl: string;
 
 	get getConnectedUser(){
 		return this.connectedUser;
@@ -25,20 +31,20 @@ export class LoginService {
 		});
 	}
 
-	login(givenLoginInfo: LoginParameter): Person{
+	login(givenLoginInfo: LoginParameter): Observable<Person>{
 		let foundPerson = this.findPersonByLogin(givenLoginInfo.login);
 
 		if(foundPerson === undefined){
 			console.log("Unknown user!!!");
-			return null;
+			return Observable.of(null);
 		} else {
 			if(foundPerson.password !== givenLoginInfo.password){
 				console.log("Incorrect password!!!");
-				return null;
+				return Observable.of(null);
 			}
 			console.log("Connected : ", foundPerson);
 			this.connectedUser = foundPerson;
-			return foundPerson;
+			return Observable.of(foundPerson).delay(2000);
 		}
 
 	}
@@ -46,6 +52,7 @@ export class LoginService {
 	logout(){
 		console.log("User {} Disconnected!!!", this.connectedUser.login);
 		this.connectedUser = null;
+		this.redirectUrl = null;
 	}
 }
 

@@ -3,7 +3,7 @@ import { FormBuilder, Validators , FormGroup, FormControl } from "@angular/forms
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { LoginService } from "../login.service";
+import { LoginService } from "../../login.service";
 
 import { LoginParameter } from '../../model/login-parameter';
 
@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit{
 		console.log(this.loginParameters);
 		if(this.loginService.login(this.loginParameters)){
 			console.log("je pars.");
-			this.router.navigate(['/home']);
+			let urlToGo = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/home';
+			this.router.navigate([urlToGo]);
 		}
 	}
 }

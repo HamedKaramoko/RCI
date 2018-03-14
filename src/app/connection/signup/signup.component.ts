@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, Validators , FormGroup } from "@angular/forms";
 
-import { LoginService } from "../login.service";
-import { UserService } from "../../service/user.service";
+import { LoginService } from "../../login.service";
+import { UserService } from "../user.service";
 
 import { Gender } from "../../model/gender";
 import { Person } from "../../model/person";

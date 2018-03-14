@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
 // Services
-import { LoginService } from './login.service';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -20,6 +20,6 @@ import { LoginService } from './login.service';
 	ConnectionRoutingModule
   ],
   declarations: [LoginComponent, SignupComponent],
-  providers: [LoginService]
+  providers: [UserService]
 })
 export class ConnectionModule { }
