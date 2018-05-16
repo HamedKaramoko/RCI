@@ -1,5 +1,5 @@
 export class Service {
-	id: string;
+	id: number;
 	label: string;
 	description: string;
 	cost: number;

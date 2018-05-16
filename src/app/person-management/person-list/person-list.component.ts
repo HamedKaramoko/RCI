@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PersonService } from '../person.service';
+import { Person } from '../../model/person';
 
 @Component({
   selector: 'app-person-list',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonListComponent implements OnInit {
 
-  constructor() { }
+	constructor(private personService: PersonService) { }
 
-  ngOnInit() {
-  }
+	persons: Person[];
+
+	ngOnInit() {
+		this.getAllPerson();
+	}
+
+	getAllPerson(){
+		this.personService.getPersons().subscribe((data: Person[])=>{
+			this.persons = data;
+		}, error=>{
+			alert("No data found");
+		});
+	}
 
 }

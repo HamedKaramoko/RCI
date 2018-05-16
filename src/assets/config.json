@@ -1,0 +1,6 @@
+{
+	"api_test": "api/persons",
+	"api_dev": "api/persons",
+	"api_qa": "api/persons",
+	"api_prod": "api/persons"
+}

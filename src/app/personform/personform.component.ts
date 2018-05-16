@@ -15,14 +15,14 @@ export class PersonformComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	person: Person = new Person("", "", Gender.F);
+	//person: Person = new Person("", "", Gender.F);
 
 	genders: String[] = Object.values(Gender);
 
-	get diagnostic() { return JSON.stringify(this.person); }
+	//get diagnostic() { return JSON.stringify(this.person); }
 
 	clear(){
-		this.person = new Person("", "", Gender.F);
+		//this.person = new Person("", "", Gender.F);
 	}
 
 }

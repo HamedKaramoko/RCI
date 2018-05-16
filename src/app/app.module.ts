@@ -33,6 +33,7 @@ import { AuthGuardService } from './auth-guard.service';
   ],
   imports: [
 		BrowserModule,
+		// HttpClientModule has to be imported after BrowserModule
 		HttpClientModule,
 		environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(
 			InMemoryDataService, { dataEncapsulation: false }

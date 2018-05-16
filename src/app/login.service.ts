@@ -58,8 +58,8 @@ export class LoginService {
 
 const persons: Person[] = [
 	{
-		id: '1',
-		login: 'hamedkaramoko',
+		id: 1,
+		login: 'hamed',
 		password: 'hamed',
 		surname: 'KARAMOKO',
 		firstname: 'Hamed',
@@ -67,9 +67,9 @@ const persons: Person[] = [
 		email: 'hamed.karamoko@outlook.com'
 	},
 	{
-		id: '2',
-		login: 'yuyu',
-		password: 'yuyu',
+		id: 2,
+		login: 'mariama',
+		password: 'mariama',
 		surname: 'OUATTARA',
 		firstname: 'MAriama Yusuf',
 		gender: Gender.F,
