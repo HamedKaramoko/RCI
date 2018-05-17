@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from './login.service';
+import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 
 
@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'RCI P.C.';
 
-  constructor(private loginService: LoginService, private router: Router){}
+  constructor(private authenticationService: AuthenticationService, private router: Router){}
 
   logOut(){
-	  this.loginService.logout();
+	  this.authenticationService.logout();
 	  this.router.navigate(['/home']);
   }
 }

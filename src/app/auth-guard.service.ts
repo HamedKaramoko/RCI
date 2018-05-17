@@ -3,12 +3,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanAc
 import { Observable } from 'rxjs/Observable';
 
 // Services
-import { LoginService } from './login.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanActivateChild {
 
-	constructor(private loginService: LoginService, private router: Router) { }
+	constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
 	canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 		console.log('AuthGuard#canActivateChild called');
@@ -23,10 +23,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
 	}
 
 	isAuthenticated(url: string): boolean{
-		if(this.loginService.getConnectedUser){
+		if(this.authenticationService.getConnectedUser){
 			return true;
 		}
-		this.loginService.redirectUrl = url;
+		this.authenticationService.redirectUrl = url;
 		this.router.navigate(['/login']);
 		return false;
 	}

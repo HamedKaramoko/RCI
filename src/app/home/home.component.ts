@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
 
 	title = 'RCI P.C.';
 
-	constructor(private loginService: LoginService) { }
+	constructor(private authenticationService: AuthenticationService) { }
 
 	ngOnInit() {
 	}

@@ -3,7 +3,7 @@ import { FormBuilder, Validators , FormGroup, FormControl } from "@angular/forms
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { LoginService } from "../../login.service";
+import { AuthenticationService } from "../../authentication.service";
 
 import { LoginParameter } from '../../model/login-parameter';
 
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit{
 
 	loginParameters: LoginParameter;
 
-	constructor(private location: Location, private router: Router, private fb: FormBuilder, private loginService: LoginService) {
+	constructor(private location: Location, private router: Router, private fb: FormBuilder, private authenticationService: AuthenticationService) {
 		console.log("constructor");
 		this.createForm();
 	}
@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit{
 			stayConnected: formModel.stayConnected
 		}
 		console.log(this.loginParameters);
-		if(this.loginService.login(this.loginParameters)){
+		if(this.authenticationService.login(this.loginParameters)){
 			console.log("je pars.");
-			let urlToGo = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/home';
+			let urlToGo = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/home';
 			this.router.navigate([urlToGo]);
 		}
 	}

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
 @Injectable()
-export class LoginService {
+export class AuthenticationService {
 
 	constructor() { }
 

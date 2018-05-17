@@ -5,13 +5,13 @@
 				<img alt="Brand" src="...">
 			</a>
 		</div>
-		<div class="navbar-form navbar-right" *ngIf="!loginService.getConnectedUser">
+		<div class="navbar-form navbar-right" *ngIf="!authenticationService.getConnectedUser">
 			<a class="btn btn-default" routerLink="/login">Log in</a>
 		</div>
-		<div class="navbar-form navbar-right" *ngIf="loginService.getConnectedUser">
+		<div class="navbar-form navbar-right" *ngIf="authenticationService.getConnectedUser">
 			<div class="dropdown">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					{{loginService.getConnectedUser.login}}
+					{{authenticationService.getConnectedUser.login}}
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -26,7 +26,7 @@
 <router-outlet></router-outlet>
 <nav class="navbar navbar-default navbar-fixed-bottom">
 	<div class="container">
-		Copyright. Designed by Hamed KARAMOKO
+		<p class="text-center" style="padding-top: 15px;">Copyright. Designed by Hamed KARAMOKO</p>
 	</div>
 </nav>
 

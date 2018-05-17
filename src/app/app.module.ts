@@ -23,7 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 // Services
 import { InMemoryDataService }  from './in-memory-data.service';
-import { LoginService } from './login.service';
+import { AuthenticationService } from './authentication.service';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from './auth-guard.service';
@@ -52,7 +52,7 @@ import { AuthGuardService } from './auth-guard.service';
 		PersonManagementModule,
 		AppRoutingModule
   ],
-  providers: [httpInterceptorProviders, LoginService, AuthGuardService],
+  providers: [httpInterceptorProviders, AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
