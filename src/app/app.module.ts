@@ -6,6 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { environment } from '../environments/environment';
 
+// Interceptors
+import { httpInterceptorProviders } from './http-interceptors';
+
 // Modules
 import { ConnectionModule } from './connection/connection.module';
 import { PersonManagementModule } from './person-management/person-management.module';
@@ -24,6 +27,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from './auth-guard.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,9 +39,9 @@ import { AuthGuardService } from './auth-guard.service';
 		BrowserModule,
 		// HttpClientModule has to be imported after BrowserModule
 		HttpClientModule,
-		environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(
+		/*environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(
 			InMemoryDataService, { dataEncapsulation: false }
-		),
+		),*/
 		FormsModule,
 		ReactiveFormsModule,
 		ConnectionModule,
@@ -45,7 +49,7 @@ import { AuthGuardService } from './auth-guard.service';
 		PersonManagementModule,
 		AppRoutingModule
   ],
-  providers: [LoginService, AuthGuardService],
+  providers: [httpInterceptorProviders, LoginService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

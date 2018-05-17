@@ -13,56 +13,54 @@ export class PersonService {
 
   apiUrl: string = '/RCI/person';
 
-  getPersons(): Observable<Person[]>{
-	const httpOptions = {
-		headers: new HttpHeaders({
-		  'accept':  'application/json'
-		})
-	};
-	return this.httpClient.get<Person[]>(this.apiUrl + '/list', httpOptions).pipe(
-		catchError(this.handleError)
-	);
-  }
+  getPersons(): Observable<HttpResponse<Person[]>>{
+		return this.httpClient.get<Person[]>(this.apiUrl + '/list',
+			{
+				headers: new HttpHeaders({'Accept':  'application/json'}), observe: 'response'
+		}).pipe(
+			catchError(this.handleError)
+		);
+	}
 
-  getPersonByLogin(login: string){
-	const httpOptions = {
-		headers: new HttpHeaders({
-		  'Accept':  'application/json'
-		})
-	};
-	return this.httpClient.get<Person>(this.apiUrl).pipe(
-		catchError(this.handleError)
-	)
+  getPerson(login: string): Observable<HttpResponse<Person>>{
+		return this.httpClient.get<Person>(this.apiUrl + `/login/${login}`, {
+			headers: new HttpHeaders({
+				'Accept':  'application/json'
+			}),
+			observe: 'response'
+		}).pipe(
+			catchError(this.handleError)
+		)
   }
 
   savePerson(personToSave: Person): Observable<Person>{
-	const httpOptions = {
-		headers: new HttpHeaders({
-			'Content-Type':  'application/json',
-			'Accept':  'application/json'
-		})
-	};
-	return this.httpClient.post<Person>(this.apiUrl, personToSave, httpOptions).pipe(
-		catchError(this.handleError)
-	);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'Accept':  'application/json'
+			})
+		};
+		return this.httpClient.post<Person>(this.apiUrl, personToSave, httpOptions).pipe(
+			catchError(this.handleError)
+		);
   }
 
   updatePerson(personToUpdate: Person): Observable<Person>{
-	const httpOptions = {
-		headers: new HttpHeaders({
-			'Content-Type':  'application/json',
-			'Accept':  'application/json'
-		})
-	};
-	return this.httpClient.put<Person>(this.apiUrl, personToUpdate, httpOptions).pipe(
-		catchError(this.handleError)
-	)
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'Accept':  'application/json'
+			})
+		};
+		return this.httpClient.put<Person>(this.apiUrl, personToUpdate, httpOptions).pipe(
+			catchError(this.handleError)
+		)
   }
 
-  deletePerson(id: string): Observable<string>{
-	return this.httpClient.delete<Person>(this.apiUrl + '/${id}', {observe: 'response'}).pipe(
-		catchError(this.handleError)
-	)
+  deletePerson(id: number): Observable<string>{
+		return this.httpClient.delete(this.apiUrl + `/${id}`).pipe(
+			catchError(this.handleError)
+		)
   }
 
   private handleError(error: HttpErrorResponse): ErrorObservable {
@@ -72,13 +70,10 @@ export class PersonService {
 	} else {
 	  // The backend returned an unsuccessful response code.
 	  // The response body may contain clues as to what went wrong,
-	  console.error(
-		`Backend returned code ${error.status}, ` +
-		`body was: ${error.error}`);
+	  console.error(`Backend returned code ${error.status}, ` +	`body was: ${error.error}`);
 	}
 	// return an observable with a user-facing error message
-	return Observable.throw(
-	  'Something bad happened; please try again later.');
+	return Observable.throw('Something bad happened; please try again later.');
   };
 
 }
