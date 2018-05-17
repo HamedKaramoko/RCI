@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { httpInterceptorProviders } from './http-interceptors';
 
 // Modules
+import { AppRoutingModule } from './/app-routing.module';
 import { ConnectionModule } from './connection/connection.module';
 import { PersonManagementModule } from './person-management/person-management.module';
 import { ServiceModule } from './servicesManagement/service.module';
@@ -17,7 +18,8 @@ import { ServiceModule } from './servicesManagement/service.module';
 // Components
 import { AppComponent } from './app.component';
 import { PersonformComponent } from './personform/personform.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 
 // Services
 import { InMemoryDataService }  from './in-memory-data.service';
@@ -33,7 +35,8 @@ import { AuthGuardService } from './auth-guard.service';
     AppComponent,
     PersonformComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    PageNotFoundComponent
   ],
   imports: [
 		BrowserModule,
