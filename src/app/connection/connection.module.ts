@@ -6,11 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectionRoutingModule } from './connection-routing.module';
 
 // Components
-import { LoginComponent } from './login/login.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { SignupComponent } from './signup/signup.component';
 
 // Services
-import { UserService } from './user.service';
+import { ConnectionService } from './connection.service';
+
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { UserService } from './user.service';
 	ReactiveFormsModule,
 	ConnectionRoutingModule
   ],
-  declarations: [LoginComponent, SignupComponent],
-  providers: [UserService]
+  declarations: [SignupComponent, SignInComponent],
+  providers: [ConnectionService]
 })
 export class ConnectionModule { }

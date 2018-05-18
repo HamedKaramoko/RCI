@@ -5,13 +5,13 @@
 				<img alt="Brand" src="...">
 			</a>
 		</div>
-		<div class="navbar-form navbar-right" *ngIf="!authenticationService.getConnectedUser">
-			<a class="btn btn-default" routerLink="/login">Log in</a>
+		<div class="navbar-form navbar-right" *ngIf="!authenticationService.connectedUser">
+			<a class="btn btn-default" routerLink="/signin">Sign in</a>
 		</div>
-		<div class="navbar-form navbar-right" *ngIf="authenticationService.getConnectedUser">
+		<div class="navbar-form navbar-right" *ngIf="authenticationService.connectedUser">
 			<div class="dropdown">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					{{authenticationService.getConnectedUser.login}}
+					<!--{{connectedUser.login}}-->
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">

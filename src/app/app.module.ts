@@ -27,6 +27,8 @@ import { AuthenticationService } from './authentication.service';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardService } from './auth-guard.service';
+import { AuthenticationGuardService } from './guard/authentication-guard.service';
+import { IsAuthenticatedGuardService } from './guard/is-authenticated-guard.service';
 
 
 
@@ -52,7 +54,7 @@ import { AuthGuardService } from './auth-guard.service';
 		PersonManagementModule,
 		AppRoutingModule
   ],
-  providers: [httpInterceptorProviders, AuthenticationService, AuthGuardService],
+  providers: [httpInterceptorProviders, AuthenticationService, AuthGuardService, AuthenticationGuardService, IsAuthenticatedGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

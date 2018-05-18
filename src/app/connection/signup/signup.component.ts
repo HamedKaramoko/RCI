@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { FormBuilder, Validators , FormGroup } from "@angular/forms";
 
 import { AuthenticationService } from "../../authentication.service";
-import { UserService } from "../user.service";
+import { ConnectionService } from '../connection.service';
 
 import { Gender } from "../../model/gender";
 import { Person } from "../../model/person";
+
 
 
 @Component({
@@ -21,9 +21,8 @@ export class SignupComponent implements OnInit {
 
 	genders: String[] = Object.values(Gender);
 
-	constructor(private location: Location, private fb: FormBuilder, private authenticationService: AuthenticationService, private userService: UserService) {
+	constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private connectionService: ConnectionService) {
 		this.createForm();
-		this.connectedUser = authenticationService.getConnectedUser;
 	}
 
 	ngOnInit() {
@@ -32,32 +31,23 @@ export class SignupComponent implements OnInit {
   	createForm(){
 		this.signUpForm = this.fb.group({
 			login: ['', Validators.required],
-			surname: ['', Validators.required],
-			firstname: ['', Validators.required],
+			password: ['', Validators.required],
+			confirmpassword: ['', Validators.required],
 			gender: [Gender.F],
-			email: [''],
+			email: ['', Validators.required],
 		});
 	}
 
 	onSubmit(){
 		let formModel = this.signUpForm.value;
 		let updatePerson:Person = {
-			id: this.connectedUser.id,
+			id: 0,
 			login: formModel.login,
-			password: this.connectedUser.password,
-			surname: formModel.surname,
-			firstname: formModel.firstname,
+			password: formModel.password,
 			gender: formModel.gender,
 			email: formModel.email
 		};
-		console.log("Old user : ", this.connectedUser);
-		console.log("Updated user : ", updatePerson);
-
-		this.userService.saveUser(updatePerson);
-	}
-
-	reset(){
-		this.location.back();
+		this.connectionService.signup(updatePerson);
 	}
 
 }

@@ -5,11 +5,13 @@ import { PersonComponent } from './person/person.component';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonDetailComponent } from './person-detail/person-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationGuardService } from '../guard/authentication-guard.service';
 
 const personRoutes: Routes = [
 	{
-		path: 'persons',
+		path: 'person',
 		component: PersonComponent,
+		canActivate: [AuthenticationGuardService],
 		children: [
 			{
 				path: '',
@@ -19,7 +21,7 @@ const personRoutes: Routes = [
 						component: PersonListComponent
 					},
 					{
-						path: 'person/:id',
+						path: ':id',
 						component: PersonDetailComponent
 					}
 				]

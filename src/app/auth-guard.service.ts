@@ -23,7 +23,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
 	}
 
 	isAuthenticated(url: string): boolean{
-		if(this.authenticationService.getConnectedUser){
+		if(this.authenticationService.connectedUser){
 			return true;
 		}
 		this.authenticationService.redirectUrl = url;
