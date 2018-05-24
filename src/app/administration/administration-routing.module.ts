@@ -5,12 +5,12 @@ import { GroupListComponent } from './group-list/group-list.component';
 
 const routes: Routes = [
 	{
-		path: '',
+		path: 'administration',
+		component: AdministrationComponent,
 		canLoad: [],
 		children: [
 			{
 				path: '',
-				component: AdministrationComponent,
 				children: [
 					{
 						path: 'group',

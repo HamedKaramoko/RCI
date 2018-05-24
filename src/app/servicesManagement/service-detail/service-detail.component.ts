@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 
 // Services
 import { ServiceService } from '../service.service';
@@ -27,8 +28,10 @@ export class ServiceDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.service$ = this.route.paramMap.switchMap((params: ParamMap) =>
-			this.serviceService.getService(params.get('id'))
+		this.service$ = this.route.paramMap.pipe(
+			switchMap((params: ParamMap) =>
+				this.serviceService.getService(params.get('id'))
+			)
 		);
 	}
 
