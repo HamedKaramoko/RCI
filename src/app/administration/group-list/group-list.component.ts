@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupService } from '../group.service';
 import { Group } from '../../model/group';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-group-list',
@@ -10,20 +11,31 @@ import { Group } from '../../model/group';
 })
 export class GroupListComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private groupService: GroupService) { }
+	constructor(private fb: FormBuilder, private groupService: GroupService) { }
 
-  ngOnInit() {
-	this.createForm();
-  }
+	ngOnInit() {
+		this.createForm();
+		this.getGroups();
+	}
 
-  addGroupForm: FormGroup;
+	addGroupForm: FormGroup;
 
-  tiles = [
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
+	groups: Group[];
 
-  ];
+	tiles = [
+		{text: 'One', cols: 1, rows: 1, color: 'lightblue'},
+		{text: 'Two', cols: 1, rows: 1, color: 'lightgreen'}
+	];
+
+	getGroups() {
+		this.groupService.getGroups().subscribe(response => {
+			this.groups = response.body
+			this.groups.forEach((group) => {
+				this.tiles.push({text: group.name, cols: 1, rows: 1, color: 'lightblue'})
+				this.tiles.push({text: 'Actions', cols: 1, rows: 1, color: 'lightblue'})
+			})
+		})
+	}
 
   	createForm(){
 		this.addGroupForm = this.fb.group({

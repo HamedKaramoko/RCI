@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { LocalStorage } from '@ngx-pwa/local-storage';
+
 import { LoginParameter } from '../../model/login-parameter';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication.service';
@@ -17,7 +20,7 @@ export class SignInComponent implements OnInit {
 
 	loginParameters: LoginParameter;
 
-  constructor(private router: Router, private fb: FormBuilder, private authenticationService: AuthenticationService) {
+  constructor(private localStorage: LocalStorage, private router: Router, private fb: FormBuilder, private authenticationService: AuthenticationService) {
     this.createForm();
   }
 
@@ -52,6 +55,10 @@ export class SignInComponent implements OnInit {
 			refreshToken: string
 		}) => {
 			console.log(JSON.stringify(data))
+			this.localStorage.setItem('tokens', {
+				'token': data.token,
+				'refreshToken': data.refreshToken
+			}).subscribe(() => {})
 		}, error => {
 			console.error("I got an error: ", error)
 		})
