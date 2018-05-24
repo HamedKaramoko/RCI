@@ -2,8 +2,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Observable } from "rxjs/Observable";
 import { finalize } from "rxjs/operators";
 
-export class LoggingInterceptor implements HttpInterceptor {
-    
+export class LoggingInterceptorService implements HttpInterceptor {
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('Request sent at : ', new Date().toLocaleString());
         return next.handle(req).pipe(

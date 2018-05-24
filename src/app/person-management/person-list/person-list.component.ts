@@ -19,7 +19,7 @@ export class PersonListComponent implements OnInit {
 
 	ngOnInit() {
 		//this.getAllPerson();
-		//this.getPerson(); // To check
+		this.getPerson(); // To check
 		//this.savePerson();
 		//this.updatePerson();
 		//this.deletePerson();

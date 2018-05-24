@@ -27,16 +27,14 @@ export class SignInComponent implements OnInit {
   createForm(){
 		this.loginForm = this.fb.group({
 			login: ['', Validators.required],
-			password: ['', Validators.required]/*,
-			stayConnected: false*/
+			password: ['', Validators.required]
 		});
 	}
 
 	cleanForm(){
 		this.loginForm.setValue({
 			login: '',
-			password: ''/*,
-			stayConnected: false*/
+			password: ''
 		});
 	}
 
@@ -45,11 +43,18 @@ export class SignInComponent implements OnInit {
 
 		this.loginParameters = {
 			login: formModel.login,
-			password: formModel.password,
-			stayConnected: formModel.stayConnected
+			password: formModel.password
 		}
-    console.log("Authentication parameters sent: ", this.loginParameters);
+    	console.log("Authentication parameters sent: ", this.loginParameters);
 		// Http call
+		this.authenticationService.signin(this.loginParameters).subscribe((data: {
+			token: string,
+			refreshToken: string
+		}) => {
+			console.log(JSON.stringify(data))
+		}, error => {
+			console.error("I got an error: ", error)
+		})
 		let personFound: Person = {
 			id: 1,
 			login: 'hamed',
@@ -59,12 +64,12 @@ export class SignInComponent implements OnInit {
 			gender: Gender.M,
 			email: 'hamed.karamoko@outlook.com'
 		};
-    if(personFound){
-			this.authenticationService.connectedUser = personFound;
-      let urlToGo = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/dashboard';
-      this.router.navigate([urlToGo]);
-    }
-    // End Http call
+		if(personFound){
+				this.authenticationService.connectedUser = personFound;
+		let urlToGo = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/dashboard';
+		this.router.navigate([urlToGo]);
+		}
+		// End Http call
 	}
 
 }

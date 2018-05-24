@@ -2,5 +2,4 @@
 export class LoginParameter {
 	login: string;
 	password: string;
-	stayConnected: boolean;
 }
