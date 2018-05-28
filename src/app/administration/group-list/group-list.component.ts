@@ -25,10 +25,8 @@ export class GroupListComponent implements OnInit {
 
 	groups: Group[];
 
-	tableData = []
-
 	displayedColumns = ['position', 'name', 'action'];
-	dataSource = ELEMENT_DATA;
+	dataSource = [];
 
 	/*applyFilter(filterValue: string) {
 		filterValue = filterValue.trim(); // Remove whitespace
@@ -39,14 +37,14 @@ export class GroupListComponent implements OnInit {
 	getGroups() {
 		this.groupService.getGroups().subscribe(response => {
 			this.groups = response.body
+			this.dataSource = []
 			this.groups.forEach((group) => {
-				this.tableData.push({
+				this.dataSource.push({
 					position: 1,
 					name: group.name,
 					action: "hey"
 				})
 			})
-			this.dataSource = this.tableData;
 			//this.dataSource = new MatTableDataSource(this.tableData);
 		})
 	}
@@ -58,7 +56,10 @@ export class GroupListComponent implements OnInit {
 
 	delete(element: Group){
 		// Show dialog
-		this.groupService.deleteGroup(element.name);
+		this.groupService.deleteGroup(element.name).subscribe((name: string) => {
+			console.log("Group deleted: ", name);
+			this.getGroups()
+		});
 	}
 
   	createForm(){
@@ -90,16 +91,3 @@ export class GroupListComponent implements OnInit {
 	}
 
 }
-
-const ELEMENT_DATA= [
-	{position: 1, name: 'Hydrogen'},
-	{position: 2, name: 'Helium'},
-	{position: 3, name: 'Lithium'},
-	{position: 4, name: 'Beryllium'},
-	{position: 5, name: 'Boron'},
-	{position: 6, name: 'Carbon'},
-	{position: 7, name: 'Nitrogen'},
-	{position: 8, name: 'Oxygen'},
-	{position: 9, name: 'Fluorine'},
-	{position: 10, name: 'Neon'},
-  ];
