@@ -5,9 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { IsAuthenticatedGuardService } from './guard/is-authenticated-guard.service';
+import { HeaderComponent } from './header/header.component';
 
 const routes: Routes = [
 	{ path: 'home', component: HomeComponent},
+	{ path: 'header', component: HeaderComponent, outlet: 'header' },
 	{ path: 'dashboard', component: DashboardComponent, canActivate:[IsAuthenticatedGuardService]},
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: '**', component: PageNotFoundComponent }

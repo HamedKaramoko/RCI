@@ -9,12 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'RCI P.C.';
+	title = 'RCI P.C.';
 
-  constructor(private authenticationService: AuthenticationService, private router: Router){}
+	isAuthenticated: boolean = false;
 
-  logOut(){
-	  //this.authenticationService.logout();
-	  this.router.navigate(['/home']);
-  }
+	constructor(private authenticationService: AuthenticationService,  private router: Router){
+		this.authenticationService.isAuthenticated$.subscribe((response: boolean) => {
+			this.isAuthenticated = response;
+		})
+	}
+
+	logOut(){
+		this.authenticationService.signOut().subscribe(() => {
+			this.authenticationService.isAuthenticated$$.next(false);
+			this.router.navigate(['/home']);
+		})
+	}
 }

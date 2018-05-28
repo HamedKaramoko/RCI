@@ -58,7 +58,9 @@ export class SignInComponent implements OnInit {
 			this.localStorage.setItem('tokens', {
 				'token': data.token,
 				'refreshToken': data.refreshToken
-			}).subscribe(() => {})
+			}).subscribe(() => {
+				this.authenticationService.isAuthenticated$$.next(true)
+			})
 		}, error => {
 			console.error("I got an error: ", error)
 		})

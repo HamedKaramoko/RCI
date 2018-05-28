@@ -1,17 +1,21 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
+import {throwError as observableThrowError,  Observable, of, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { Person } from './model/person';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 //import {  ErrorObservable} from 'rxjs/observable/ErrorObservable';
-import { catchError, shareReplay } from 'rxjs/operators';
+import { catchError, shareReplay, flatMap } from 'rxjs/operators';
 import { LoginParameter } from './model/login-parameter';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable()
 export class AuthenticationService {
 
-	constructor(private httpClient: HttpClient) { }
+	constructor(private httpClient: HttpClient, private localStorage: LocalStorage) { }
+
+	isAuthenticated$$: BehaviorSubject<boolean> = new BehaviorSubject(false)
+	isAuthenticated$: Observable<boolean> = this.isAuthenticated$$.asObservable();
 
 	apiUrl: string = '/RCI/authentication';
 
@@ -38,6 +42,20 @@ export class AuthenticationService {
 		}).pipe(
 			shareReplay()
 		)
+	}
+
+	isAuthenticated(): Observable<boolean> {
+		return this.localStorage.getItem("tokens").pipe(
+			flatMap((tokens: { token: string, refreshToken: string}) => {
+				if(!tokens) { return of(false) }
+				// Faire des controles pour le cas où la date de validité du token est passée
+				return of(true)
+			})
+		)
+	}
+
+	signOut(): Observable<any> {
+		return this.localStorage.removeItem('tokens');
 	}
 
 	/*private handleError(error: HttpErrorResponse): ErrorObservable {

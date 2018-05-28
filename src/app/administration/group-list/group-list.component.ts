@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupService } from '../group.service';
 import { Group } from '../../model/group';
 import { forEach } from '@angular/router/src/utils/collection';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-group-list',
@@ -20,27 +21,56 @@ export class GroupListComponent implements OnInit {
 
 	addGroupForm: FormGroup;
 
+	currentGroup:Group;
+
 	groups: Group[];
 
-	tiles = [
-		{text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-		{text: 'Two', cols: 1, rows: 1, color: 'lightgreen'}
-	];
+	tableData = []
+
+	displayedColumns = ['position', 'name', 'action'];
+	dataSource = ELEMENT_DATA;
+
+	/*applyFilter(filterValue: string) {
+		filterValue = filterValue.trim(); // Remove whitespace
+		filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+		this.dataSource.filter = filterValue;
+	}*/
 
 	getGroups() {
 		this.groupService.getGroups().subscribe(response => {
 			this.groups = response.body
 			this.groups.forEach((group) => {
-				this.tiles.push({text: group.name, cols: 1, rows: 1, color: 'lightblue'})
-				this.tiles.push({text: 'Actions', cols: 1, rows: 1, color: 'lightblue'})
+				this.tableData.push({
+					position: 1,
+					name: group.name,
+					action: "hey"
+				})
 			})
+			this.dataSource = this.tableData;
+			//this.dataSource = new MatTableDataSource(this.tableData);
 		})
+	}
+
+	update(element: Group){
+		this.currentGroup = element
+		this.setFormGroup(element)
+	}
+
+	delete(element: Group){
+		// Show dialog
+		this.groupService.deleteGroup(element.name);
 	}
 
   	createForm(){
 		this.addGroupForm = this.fb.group({
 			name: ['', Validators.required]
 		});
+	}
+
+	setFormGroup(element: Group) {
+		this.addGroupForm.setValue({
+			name: element.name
+		})
 	}
 
 	onSubmit(){
@@ -60,3 +90,16 @@ export class GroupListComponent implements OnInit {
 	}
 
 }
+
+const ELEMENT_DATA= [
+	{position: 1, name: 'Hydrogen'},
+	{position: 2, name: 'Helium'},
+	{position: 3, name: 'Lithium'},
+	{position: 4, name: 'Beryllium'},
+	{position: 5, name: 'Boron'},
+	{position: 6, name: 'Carbon'},
+	{position: 7, name: 'Nitrogen'},
+	{position: 8, name: 'Oxygen'},
+	{position: 9, name: 'Fluorine'},
+	{position: 10, name: 'Neon'},
+  ];

@@ -5,6 +5,7 @@ import { AdministrationRoutingModule } from './administration-routing.module';
 import { GroupListComponent } from './group-list/group-list.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatTableModule} from '@angular/material/table';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GroupService } from './group.service';
 
@@ -14,6 +15,7 @@ import { GroupService } from './group.service';
 	FormsModule,
 	ReactiveFormsModule,
 	MatGridListModule,
+	MatTableModule,
     AdministrationRoutingModule
   ],
   declarations: [GroupListComponent, AdministrationComponent],

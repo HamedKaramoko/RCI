@@ -24,9 +24,6 @@ export class GroupService {
 			observe: 'response'
 		})
 	}
-	fake(){
-
-	}
 
 	saveGroup(group: Group): Observable<Group>{
 		const httpOptions = {
