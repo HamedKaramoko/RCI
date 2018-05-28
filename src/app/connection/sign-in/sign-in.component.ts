@@ -59,7 +59,8 @@ export class SignInComponent implements OnInit {
 				'token': data.token,
 				'refreshToken': data.refreshToken
 			}).subscribe(() => {
-				this.authenticationService.isAuthenticated$$.next(true)
+				this.authenticationService.isAuthenticated$$.next(true);
+				this.router.navigate([this.authenticationService.redirectionUrl])
 			})
 		}, error => {
 			console.error("I got an error: ", error)
@@ -75,7 +76,7 @@ export class SignInComponent implements OnInit {
 		};
 		if(personFound){
 				this.authenticationService.connectedUser = personFound;
-		let urlToGo = this.authenticationService.redirectUrl ? this.authenticationService.redirectUrl : '/dashboard';
+		let urlToGo = this.authenticationService.redirectionUrl || '/dashboard';
 		this.router.navigate([urlToGo]);
 		}
 		// End Http call

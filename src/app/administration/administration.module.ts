@@ -8,15 +8,18 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { GroupService } from './group.service';
+import { MatSortModule, MatPaginatorModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   imports: [
 	CommonModule,
 	FormsModule,
 	ReactiveFormsModule,
-	MatGridListModule,
-	MatTableModule,
-    AdministrationRoutingModule
+  MatSortModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
+  AdministrationRoutingModule
   ],
   declarations: [GroupListComponent, AdministrationComponent],
   providers: [GroupService]

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupService } from '../group.service';
 import { Group } from '../../model/group';
 import { forEach } from '@angular/router/src/utils/collection';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import { FetchTableDataService } from '../../fetch-table-data.service';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Observable, of, merge } from 'rxjs';
 
 @Component({
   selector: 'app-group-list',
@@ -12,11 +15,37 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class GroupListComponent implements OnInit {
 
-	constructor(private fb: FormBuilder, private groupService: GroupService) { }
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	  
+	url: string = 'RCI/group/list'
+
+	constructor(private fb: FormBuilder, private groupService: GroupService, private fetchTableDataService: FetchTableDataService) { }
 
 	ngOnInit() {
 		this.createForm();
 		this.getGroups();
+		merge(this.sort.sortChange, this.paginator.page).pipe(
+			startWith({}),
+			switchMap(() => {
+				this.isLoadingResults = true;
+				return this.fetchTableDataService!.fetch(this.url);
+			}),
+			map((data: Group[]) => {
+				// Flip flag to show that loading has finished.
+				this.isLoadingResults = false;
+				this.isRateLimitReached = false;
+				this.resultsLength = data.length;
+
+				return data;
+			}),
+			catchError(() => {
+				this.isLoadingResults = false;
+				// Catch if the GitHub API has reached its rate limit. Return empty data.
+				this.isRateLimitReached = true;
+				return of([]);
+			})
+		).subscribe(data => this.dataSource = data);
 	}
 
 	addGroupForm: FormGroup;
@@ -26,6 +55,9 @@ export class GroupListComponent implements OnInit {
 	groups: Group[];
 
 	displayedColumns = ['position', 'name', 'action'];
+	resultsLength = 0;
+	isLoadingResults = true;
+	isRateLimitReached = false;
 	dataSource = [];
 
 	/*applyFilter(filterValue: string) {

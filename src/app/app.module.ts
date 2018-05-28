@@ -30,6 +30,7 @@ import { AuthenticationGuardService } from './guard/authentication-guard.service
 import { IsAuthenticatedGuardService } from './guard/is-authenticated-guard.service';
 import { AdministrationModule } from './administration/administration.module';
 import { HeaderComponent } from './header/header.component';
+import { FetchTableDataService } from './fetch-table-data.service';
 
 
 
@@ -55,7 +56,7 @@ import { HeaderComponent } from './header/header.component';
 		AdministrationModule,
 		AppRoutingModule
   ],
-  providers: [httpInterceptorProviders, AuthenticationService, AuthGuardService, AuthenticationGuardService, IsAuthenticatedGuardService],
+  providers: [httpInterceptorProviders, AuthenticationService, AuthGuardService, AuthenticationGuardService, IsAuthenticatedGuardService, FetchTableDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

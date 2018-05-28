@@ -6,36 +6,49 @@
 		<!--mat-form-field>
 			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 		</mat-form-field-->
-		<div class="col-md-8 col-md-offset-2" style="border: 1px black inset; border-radius: 5px; box-shadow: inset">
-			<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-				<!-- Position Column -->
-				<ng-container matColumnDef="position">
-					<th mat-header-cell *matHeaderCellDef> No. </th>
-					<td mat-cell *matCellDef="let element"> {{element.position}} </td>
-				</ng-container>
+		<div class="col-md-8 col-md-offset-2" style="border: 1px black inset; border-radius: 5px; padding-bottom: 15px; box-shadow: inset">
+			<div class="example-container mat-elevation-z8">
+				<div class="example-loading-shade"
+						*ngIf="isLoadingResults || isRateLimitReached">
+					<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+					<div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+					GitHub's API rate limit has been reached. It will be reset in one minute.
+					</div>
+				</div>
+				<div class="example-table-container">
+					<table mat-table [dataSource]="dataSource" class="example-table"
+						matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+						<!-- Position Column -->
+						<ng-container matColumnDef="position">
+							<th mat-header-cell *matHeaderCellDef> No. </th>
+							<td mat-cell *matCellDef="let element"> {{element.position}} </td>
+						</ng-container>
 
-				<!-- Name Column -->
-				<ng-container matColumnDef="name">
-					<th mat-header-cell *matHeaderCellDef> Name </th>
-					<td mat-cell *matCellDef="let element"> {{element.name}} </td>
-				</ng-container>
+						<!-- Name Column -->
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef> Name </th>
+							<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+						</ng-container>
 
-				<!-- Weight Column -->
-				<ng-container matColumnDef="action">
-					<th mat-header-cell *matHeaderCellDef> Actions </th>
-					<td mat-cell *matCellDef="let element">
-						<button (click)="update(element)">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</button>
-						<button (click)="delete(element)">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-					</td>
-				</ng-container>
+						<!-- Weight Column -->
+						<ng-container matColumnDef="action">
+							<th mat-header-cell *matHeaderCellDef> Actions </th>
+							<td mat-cell *matCellDef="let element">
+								<button (click)="update(element)">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+								<button (click)="delete(element)">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</td>
+						</ng-container>
 
-				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-			</table>
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+				</div>
+				<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+			</div>
 		</div>
 	</div>
 	<div class="row">
