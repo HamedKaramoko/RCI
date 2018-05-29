@@ -35,8 +35,8 @@ export class GroupService {
 		return this.httpClient.post<Group>(this.apiUrl, group, httpOptions)
 	}
 
-	deleteGroup(name: string): Observable<string>{
-		return this.httpClient.delete<string>(this.apiUrl + `/${name}`)
+	deleteGroup(name: string): Observable<any>{
+		return this.httpClient.delete(this.apiUrl + `/${name}`)
 	}
 
 }

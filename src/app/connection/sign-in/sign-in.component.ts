@@ -50,18 +50,8 @@ export class SignInComponent implements OnInit {
 		}
     	console.log("Authentication parameters sent: ", this.loginParameters);
 		// Http call
-		this.authenticationService.signin(this.loginParameters).subscribe((data: {
-			token: string,
-			refreshToken: string
-		}) => {
-			console.log(JSON.stringify(data))
-			this.localStorage.setItem('tokens', {
-				'token': data.token,
-				'refreshToken': data.refreshToken
-			}).subscribe(() => {
-				this.authenticationService.isAuthenticated$$.next(true);
-				this.router.navigate([this.authenticationService.redirectionUrl])
-			})
+		this.authenticationService.signin(this.loginParameters).subscribe(() => {
+			this.router.navigate([this.authenticationService.redirectionUrl]);
 		}, error => {
 			console.error("I got an error: ", error)
 		})

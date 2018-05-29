@@ -23,11 +23,11 @@ export class AuthenticationService {
 	// store the URL so we can redirect after logging in
 	redirectionUrl: string = null;
 
-	
+
 	public get redirectionURL() : string {
 		return this.redirectionUrl || '/home';
 	}
-	
+
 
 	signin(authenticationParams: LoginParameter): Observable<any>{
 		return this.httpClient.post(`${this.apiUrl}/signin`, {
@@ -36,6 +36,14 @@ export class AuthenticationService {
 		}, {
 			headers: new HttpHeaders({'Accept':  'application/json', 'Content-Type': 'application/json'})
 		}).pipe(
+			switchMap((tokens: { token: string, refreshToken: string }) => {
+				console.log(JSON.stringify(tokens))
+				this.isAuthenticated$$.next(true);
+				return this.localStorage.setItem('tokens', {
+					'token': tokens.token,
+					'refreshToken': tokens.refreshToken
+				})
+			}),
 			shareReplay()
 		)
 	}

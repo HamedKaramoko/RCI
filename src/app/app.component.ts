@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,20 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-	title = 'RCI P.C.';
 
-	isAuthenticated: boolean = false;
-
-	constructor(private authenticationService: AuthenticationService,  private router: Router){
-		this.authenticationService.isAuthenticated$.subscribe((response: boolean) => {
-			this.isAuthenticated = response;
-		})
-	}
-
-	logOut(){
-		this.authenticationService.signOut().subscribe(() => {
-			this.authenticationService.isAuthenticated$$.next(false);
-			this.router.navigate(['/home']);
-		})
-	}
+	constructor(){	}
 }

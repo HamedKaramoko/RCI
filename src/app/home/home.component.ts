@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
 	constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
 	ngOnInit() {
-		//this.router.navigate([ { outlets: { header: ['header']}}])
 	}
 
 }

@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GroupService } from '../group.service';
 import { Group } from '../../model/group';
 import { forEach } from '@angular/router/src/utils/collection';
-import {MatTableDataSource, MatPaginator, MatSort} from '@angular/material';
+import {MatTableDataSource, MatPaginator, MatSort, MatTable} from '@angular/material';
 import { FetchTableDataService } from '../../fetch-table-data.service';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Observable, of, merge } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-group-list',
@@ -17,8 +18,20 @@ export class GroupListComponent implements OnInit {
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	  
+	@ViewChild(MatTable) table: MatTable<Object>;
+
 	url: string = 'RCI/group/list'
+	addGroupForm: FormGroup;
+
+	currentGroup:Group;
+
+	groups: Group[];
+
+	displayedColumns = ['position', 'name', 'action'];
+	resultsLength = 0;
+	isLoadingResults = true;
+	isRateLimitReached = false;
+	dataSource = [];
 
 	constructor(private fb: FormBuilder, private groupService: GroupService, private fetchTableDataService: FetchTableDataService) { }
 
@@ -48,18 +61,6 @@ export class GroupListComponent implements OnInit {
 		).subscribe(data => this.dataSource = data);
 	}
 
-	addGroupForm: FormGroup;
-
-	currentGroup:Group;
-
-	groups: Group[];
-
-	displayedColumns = ['position', 'name', 'action'];
-	resultsLength = 0;
-	isLoadingResults = true;
-	isRateLimitReached = false;
-	dataSource = [];
-
 	/*applyFilter(filterValue: string) {
 		filterValue = filterValue.trim(); // Remove whitespace
 		filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -69,7 +70,9 @@ export class GroupListComponent implements OnInit {
 	getGroups() {
 		this.groupService.getGroups().subscribe(response => {
 			this.groups = response.body
-			this.dataSource = []
+			//this.dataSource = []
+			this.table.dataSource = this.dataSource;
+			this.table.renderRows()
 			this.groups.forEach((group) => {
 				this.dataSource.push({
 					position: 1,
@@ -88,8 +91,8 @@ export class GroupListComponent implements OnInit {
 
 	delete(element: Group){
 		// Show dialog
-		this.groupService.deleteGroup(element.name).subscribe((name: string) => {
-			console.log("Group deleted: ", name);
+		this.groupService.deleteGroup(element.name).subscribe(() => {
+			//console.log("Group deleted: ", name);
 			this.getGroups()
 		});
 	}
@@ -117,6 +120,7 @@ export class GroupListComponent implements OnInit {
 		// Http call
 		this.groupService.saveGroup(group).subscribe(data => {
 			console.log(JSON.stringify(data))
+			let i = this.table.dataSource;
 		}, error => {
 			console.error("I got an error: ", error)
 		})
