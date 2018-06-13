@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { FetchTableDataService } from './fetch-table-data.service';
 
-describe('FetchTableDataService', () => {
+xdescribe('FetchTableDataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [FetchTableDataService]
